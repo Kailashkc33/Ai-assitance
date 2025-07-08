@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
   try {
-    // Dynamically import nodemailer to avoid build-time errors
+    // Dynamically import nodemailer to avoid build-time errors on Vercel
     const nodemailer = (await import('nodemailer')).default;
 
     const data = await req.json();
