@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import nodemailer from 'nodemailer'; // Email functionality for client confirmations
 
 export async function POST(req: NextRequest) {
   try {
+    // Dynamically import nodemailer to avoid build-time errors
+    const nodemailer = (await import('nodemailer')).default;
+
     const data = await req.json();
 
     // Load email credentials from env
@@ -94,7 +96,7 @@ export async function POST(req: NextRequest) {
     // Send both emails
     await Promise.all([
       // Send confirmation to client
-      transporter.sendMail({ 
+      transporter.sendMail({
         from: EMAIL_FROM,
         to: data.email,
         subject: clientSubject,
